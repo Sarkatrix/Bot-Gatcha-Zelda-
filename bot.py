@@ -13,9 +13,9 @@ with open("entities.json", "r", encoding="utf-8") as f:
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-summon_tracker = {}         # Pour limiter les invocations
-user_collections = {}       # Pour stocker les invocations par catégories
-equipped_relics = {}        # Pour stocker les reliques équipées
+summon_tracker = {}
+user_collections = {}
+equipped_relics = {}
 
 MAX_SUMMONS_PER_DAY = 5
 
@@ -75,6 +75,10 @@ async def summon(interaction: discord.Interaction):
         embed.add_field(name="✨ Effets", value="\n".join(entity["effects"]), inline=False)
     else:
         embed.add_field(name="✨ Capacités", value="\n".join(entity["abilities"]), inline=False)
+
+    # Ajout de l'image si disponible
+    if "image" in entity and entity["image"]:
+        embed.set_image(url=entity["image"])
 
     await interaction.response.send_message(embed=embed)
 
@@ -161,5 +165,5 @@ async def relics(interaction: discord.Interaction, relique: str):
     equipped_relics[user_id] = relique
     await interaction.response.send_message(f"✅ Tu as équipé la relique : **{relique}**", ephemeral=True)
 
-# Lancement sécurisé via Railway
+# Lancement du bot via variable d'environnement
 bot.run(os.getenv("DISCORD_TOKEN"))
