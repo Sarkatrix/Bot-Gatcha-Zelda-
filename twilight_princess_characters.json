@@ -1,0 +1,202 @@
+[
+  {
+    "name": "Link (Crépusculaire) #1",
+    "rarity": "Épique",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 1",
+      "Technique de combat 2"
+    ]
+  },
+  {
+    "name": "Zelda (Crépusculaire) #2",
+    "rarity": "Épique",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 1",
+      "Technique de combat 1"
+    ]
+  },
+  {
+    "name": "Midona (véritable) #3",
+    "rarity": "Légendaire",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 3",
+      "Technique de combat 1"
+    ]
+  },
+  {
+    "name": "Xanto #4",
+    "rarity": "Légendaire",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 2",
+      "Technique de combat 3"
+    ]
+  },
+  {
+    "name": "Ganondorf #5",
+    "rarity": "Légendaire",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 3",
+      "Technique de combat 2"
+    ]
+  },
+  {
+    "name": "Rana #6",
+    "rarity": "Rare",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 2",
+      "Technique de combat 3"
+    ]
+  },
+  {
+    "name": "Auru #7",
+    "rarity": "Rare",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 3",
+      "Technique de combat 1"
+    ]
+  },
+  {
+    "name": "Shad #8",
+    "rarity": "Rare",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 1",
+      "Technique de combat 2"
+    ]
+  },
+  {
+    "name": "Ashei #9",
+    "rarity": "Rare",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 3",
+      "Technique de combat 2"
+    ]
+  },
+  {
+    "name": "Telma #10",
+    "rarity": "Rare",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 3",
+      "Technique de combat 2"
+    ]
+  },
+  {
+    "name": "Rusl #11",
+    "rarity": "Rare",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 2",
+      "Technique de combat 1"
+    ]
+  },
+  {
+    "name": "Colin #12",
+    "rarity": "Commune",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 2",
+      "Technique de combat 3"
+    ]
+  },
+  {
+    "name": "Barnes #13",
+    "rarity": "Commune",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 1",
+      "Technique de combat 1"
+    ]
+  },
+  {
+    "name": "Renado #14",
+    "rarity": "Commune",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 3",
+      "Technique de combat 2"
+    ]
+  },
+  {
+    "name": "Ilia #15",
+    "rarity": "Commune",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 1",
+      "Technique de combat 1"
+    ]
+  },
+  {
+    "name": "Darbus #16",
+    "rarity": "Rare",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 2",
+      "Technique de combat 1"
+    ]
+  },
+  {
+    "name": "Impa (Crépuscule) #17",
+    "rarity": "Épique",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 3",
+      "Technique de combat 1"
+    ]
+  },
+  {
+    "name": "Soldat Hylien #18",
+    "rarity": "Commune",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 1",
+      "Technique de combat 3"
+    ]
+  },
+  {
+    "name": "Ancien Sage #19",
+    "rarity": "Épique",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 3",
+      "Technique de combat 1"
+    ]
+  },
+  {
+    "name": "Postier de Hyrule #20",
+    "rarity": "Commune",
+    "game": "Twilight Princess",
+    "evolves_to": null,
+    "abilities": [
+      "Capacité spéciale 3",
+      "Technique de combat 1"
+    ]
+  }
+]
