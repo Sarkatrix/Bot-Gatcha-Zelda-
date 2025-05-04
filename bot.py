@@ -13,8 +13,8 @@ with open("entities.json", "r", encoding="utf-8") as f:
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
 
-summon_tracker = {}         # Pour limiter à 5 invocations/jour
-user_collections = {}       # Pour stocker les invocations des joueurs
+summon_tracker = {}         # Pour limiter les invocations
+user_collections = {}       # Pour stocker les invocations par catégories
 equipped_relics = {}        # Pour stocker les reliques équipées
 
 MAX_SUMMONS_PER_DAY = 5
@@ -58,8 +58,10 @@ async def summon(interaction: discord.Interaction):
 
     # Ajouter à la collection du joueur
     if user_id not in user_collections:
-        user_collections[user_id] = []
-    user_collections[user_id].append(entity["name"])
+        user_collections[user_id] = {"characters": [], "items": [], "creatures": []}
+
+    if entity["name"] not in user_collections[user_id][category]:
+        user_collections[user_id][category].append(entity["name"])
 
     embed = discord.Embed(
         title=f"🎉 Invocation : {entity['name']}",
@@ -76,27 +78,41 @@ async def summon(interaction: discord.Interaction):
 
     await interaction.response.send_message(embed=embed)
 
-# /collection (privée)
-@bot.tree.command(name="collection", description="Affiche ta collection d'invocations")
+# /collection par catégories
+@bot.tree.command(name="collection", description="Affiche ta collection d'invocations par catégories")
 async def collection(interaction: discord.Interaction):
     user_id = interaction.user.id
 
-    if user_id not in user_collections or not user_collections[user_id]:
+    if user_id not in user_collections or all(len(user_collections[user_id][cat]) == 0 for cat in ["characters", "items", "creatures"]):
         await interaction.response.send_message(
             "📭 Ta collection est vide pour le moment.",
             ephemeral=True
         )
         return
 
-    collection_list = user_collections[user_id]
-    display = "\n".join(f"• {name}" for name in collection_list[-20:])  # Les 20 dernières
+    collection = user_collections[user_id]
+    description = ""
+
+    if collection["characters"]:
+        description += f"**👤 Personnages ({len(collection['characters'])})**\n"
+        description += "\n".join(f"• {name}" for name in collection["characters"]) + "\n\n"
+
+    if collection["items"]:
+        description += f"**🧰 Objets ({len(collection['items'])})**\n"
+        description += "\n".join(f"• {name}" for name in collection["items"]) + "\n\n"
+
+    if collection["creatures"]:
+        description += f"**👾 Créatures ({len(collection['creatures'])})**\n"
+        description += "\n".join(f"• {name}" for name in collection["creatures"]) + "\n\n"
 
     embed = discord.Embed(
         title=f"📚 Ta collection d'invocations",
-        description=display,
+        description=description.strip(),
         color=discord.Color.green()
     )
-    embed.set_footer(text=f"Total : {len(collection_list)} invocations")
+
+    total = sum(len(collection[cat]) for cat in ["characters", "items", "creatures"])
+    embed.set_footer(text=f"Total : {total} entités collectionnées")
 
     await interaction.response.send_message(embed=embed, ephemeral=True)
 
@@ -138,11 +154,12 @@ async def relics(interaction: discord.Interaction, relique: str):
 
     if relique not in relics_list:
         await interaction.response.send_message(
-            f"❌ Relique inconnue. Choisis parmi : {', '.join(relics_list)}", ephemeral=True)
+            f"❌ Relique inconnue. Choisis parmi : {', '.join(relics_list)}",
+            ephemeral=True)
         return
 
     equipped_relics[user_id] = relique
     await interaction.response.send_message(f"✅ Tu as équipé la relique : **{relique}**", ephemeral=True)
 
-# Lancement du bot
+# Lancement sécurisé via Railway
 bot.run(os.getenv("DISCORD_TOKEN"))
