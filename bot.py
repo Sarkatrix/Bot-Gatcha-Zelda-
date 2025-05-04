@@ -4,7 +4,7 @@ from discord import app_commands
 import json
 import random
 from datetime import datetime
-import os  # ✅ Pour récupérer le token via variable d'environnement
+import os
 
 # Charger les données JSON
 with open("entities.json", "r", encoding="utf-8") as f:
@@ -12,21 +12,20 @@ with open("entities.json", "r", encoding="utf-8") as f:
 
 intents = discord.Intents.default()
 bot = commands.Bot(command_prefix="!", intents=intents)
-summon_tracker = {}
+
+summon_tracker = {}         # Pour limiter à 5 invocations/jour
+user_collections = {}       # Pour stocker les invocations des joueurs
+equipped_relics = {}        # Pour stocker les reliques équipées
+
 MAX_SUMMONS_PER_DAY = 5
 
-# Liste des régions pour /explore
 regions = [
     "Ordinn", "Lanelle", "Forêt Korogu", "Necluda", "Akkala", "Neige d'Hébra"
 ]
 
-# Liste des reliques disponibles
 relics_list = [
     "Bombe Sheikah", "Grappin", "Miroir des Ombres", "Ocarina du Temps", "Cape de Feu"
 ]
-
-# Relics équipées par utilisateur
-equipped_relics = {}
 
 @bot.event
 async def on_ready():
@@ -37,7 +36,7 @@ async def on_ready():
     except Exception as e:
         print(f"Erreur de sync : {e}")
 
-# /summon avec limite journalière
+# /summon
 @bot.tree.command(name="summon", description="Invoque un personnage, objet ou créature aléatoire")
 async def summon(interaction: discord.Interaction):
     user_id = interaction.user.id
@@ -49,12 +48,18 @@ async def summon(interaction: discord.Interaction):
 
     if summon_tracker[user_id]["count"] >= MAX_SUMMONS_PER_DAY:
         await interaction.response.send_message(
-            f"⛔ Tu as déjà utilisé tes {MAX_SUMMONS_PER_DAY} invocations pour aujourd'hui !", ephemeral=True)
+            f"⛔ Tu as déjà utilisé tes {MAX_SUMMONS_PER_DAY} invocations pour aujourd'hui !",
+            ephemeral=True)
         return
 
     summon_tracker[user_id]["count"] += 1
     category = random.choice(["characters", "items", "creatures"])
     entity = random.choice(data[category])
+
+    # Ajouter à la collection du joueur
+    if user_id not in user_collections:
+        user_collections[user_id] = []
+    user_collections[user_id].append(entity["name"])
 
     embed = discord.Embed(
         title=f"🎉 Invocation : {entity['name']}",
@@ -71,7 +76,31 @@ async def summon(interaction: discord.Interaction):
 
     await interaction.response.send_message(embed=embed)
 
-# /explore pour découvrir des régions et loots
+# /collection (privée)
+@bot.tree.command(name="collection", description="Affiche ta collection d'invocations")
+async def collection(interaction: discord.Interaction):
+    user_id = interaction.user.id
+
+    if user_id not in user_collections or not user_collections[user_id]:
+        await interaction.response.send_message(
+            "📭 Ta collection est vide pour le moment.",
+            ephemeral=True
+        )
+        return
+
+    collection_list = user_collections[user_id]
+    display = "\n".join(f"• {name}" for name in collection_list[-20:])  # Les 20 dernières
+
+    embed = discord.Embed(
+        title=f"📚 Ta collection d'invocations",
+        description=display,
+        color=discord.Color.green()
+    )
+    embed.set_footer(text=f"Total : {len(collection_list)} invocations")
+
+    await interaction.response.send_message(embed=embed, ephemeral=True)
+
+# /explore
 @bot.tree.command(name="explore", description="Explore une région et découvre des trésors ou des événements.")
 async def explore(interaction: discord.Interaction):
     region = random.choice(regions)
@@ -86,7 +115,7 @@ async def explore(interaction: discord.Interaction):
 
     await interaction.response.send_message(description[outcome])
 
-# /duel entre deux utilisateurs
+# /duel
 @bot.tree.command(name="duel", description="Défie un autre invocateur au combat !")
 @app_commands.describe(opposant="Mentionne un joueur pour l'affronter")
 async def duel(interaction: discord.Interaction, opposant: discord.Member):
@@ -101,7 +130,7 @@ async def duel(interaction: discord.Interaction, opposant: discord.Member):
         f"⚔️ {interaction.user.mention} défie {opposant.mention} !\n"
         f"🎉 Le gagnant est **{winner.display_name}** !")
 
-# /relics pour équiper un objet spécial
+# /relics
 @bot.tree.command(name="relics", description="Équipe une relique spéciale.")
 @app_commands.describe(relique="Choisis une relique à équiper")
 async def relics(interaction: discord.Interaction, relique: str):
@@ -113,7 +142,7 @@ async def relics(interaction: discord.Interaction, relique: str):
         return
 
     equipped_relics[user_id] = relique
-    await interaction.response.send_message(f"✅ Tu as équipé la relique : **{relique}**")
+    await interaction.response.send_message(f"✅ Tu as équipé la relique : **{relique}**", ephemeral=True)
 
-# ✅ Lancement du bot avec token en variable Railway
+# Lancement du bot
 bot.run(os.getenv("DISCORD_TOKEN"))
