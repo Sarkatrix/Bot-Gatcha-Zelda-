@@ -1,25 +1,24 @@
 [
   {
-    "name": "Link (Twilight Princess) #1",
+    "name": "Link (Twilight Princess)",
     "rarity": "Légendaire",
     "game": "Twilight Princess",
     "evolves_to": null,
     "abilities": [
       "Maîtrise de techniques ancestrales",
       "Purifie les ténèbres"
-
-    ]
+    ],
+    "image": "https://fr.pinterest.com/pin/708754060100767974/"
   },
   {
-    "name": "Link Loup (Twilight Princess) #2",
+    "name": "Link Loup (Twilight Princess)",
     "rarity": "Légendaire",
     "game": "Twilight Princess",
     "evolves_to": null,
     "abilities": [
       "Communication avec les esprits",
       "Bond sauvage sur les ennemis"
-      ],
-  "image": "https://fr.pinterest.com/pin/708754060100767974/"
-    
-  },
-  {
+    ],
+    "image": "https://fr.pinterest.com/pin/708754060100767974/"
+  }
+]
